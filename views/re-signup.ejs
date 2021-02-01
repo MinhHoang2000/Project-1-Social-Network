@@ -1,0 +1,75 @@
+<html>
+<head>
+    <title>Sign up</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="/public/CSS/re-signup.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+       Tài khoản không hợp lệ vui lòng đăng ký tài khoản
+    </div> 
+  <div class="container register">
+                <div class="row">
+                    <div class="col-md-3 register-left">
+                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+                        <h3>Welcome Fackebook</h3>
+                        <p>Please sign up for your account</p>
+                        <input type="submit" name="" value="Login"/><br/>
+                    </div>
+                    <div class="col-md-9 register-right">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <form action="/signup" method="POST">
+                                <div class="row register-form">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="First Name" value="" name="fname"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Last Name" value="" name="lname" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="Password" value="" name="password" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control"  placeholder="Confirm Password" value="" name="password2"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="maxl">
+                                                <label class="radio inline"> 
+                                                    <input type="radio" name="gender" value="male" checked>
+                                                    <span> Male </span> 
+                                                </label>
+                                                <label class="radio inline"> 
+                                                    <input type="radio" name="gender" value="female">
+                                                    <span>Female </span> 
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Username" value="" name="username"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" minlength="10" maxlength="10" name="phone" class="form-control" placeholder="Your Phone" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" minlength="10" maxlength="10" name="country" class="form-control" placeholder="Country" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" name="birthday">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Sign up</button>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+</html>

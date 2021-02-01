@@ -1,0 +1,35 @@
+var user={
+     name:String,
+     fname:String,
+     lname:String,
+     fullname:String,
+     sex:String,
+     birthday:String,
+     address:String,
+     phone:String,
+     company:String,
+     country:String,
+     avatar:String,
+     password:String,
+     age:String,
+     friends:Array
+}
+class User{
+    constructor(user){
+        this.name=user.name;
+        this.fname=user.fname;
+        this.lname=user.lname;
+        this.fullname=user.fullname;
+        this.sex=user.sex;
+        this.birthday=user.birthday;
+        this.password=user.password;
+        this.country="VietNam";
+        this.address="HaNoi";
+        this.phone="0912345678";
+        this.company="HUST";
+        this.avatar="avatar.png";
+        this.age='';
+        this.friends=[];
+    }
+}
+module.exports=User;

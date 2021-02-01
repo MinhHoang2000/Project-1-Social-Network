@@ -1,0 +1,48 @@
+<script>
+    const inputComment = document.getElementById('commentInput');
+    const form = document.getElementById("commentForm");
+    var comment_frame = document.getElementById("comment_frame")
+    // event comment
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        var inputComt = inputComment.value;
+        socket.emit("clientSend", {
+            mes: `${inputComt}`,
+            commentuser: "<%=userSession.name%>",
+            post_id: "<%=post._id%>",
+        });
+        inputComment.value = "";
+    });
+    socket.on("serverSend", (data) => {
+        var param = document.createElement("p");
+        param.innerHTML = `<div class="d-flex flex-row align-items-start" style="font-size: 18px;">
+            <img class="rounded-circle" src="/public/image/avatar/${data.avatarcomment}" width="32"
+                height="32">
+                <div style="border-radius: 12px; border: 2px solid #e6e7e9; background-color: #F2F3F5; padding: 1px 8px 1px 8px; margin-left: 5px;">
+                    <a href="/profile/${data.commentuser}"
+                style="font-size: 18px;">${data.commentuser}</a>
+                <br>
+                ${data.comment}
+                </div>
+            
+        </div>`
+        document.getElementById("comment_frame").appendChild(param);
+        document.getElementById("commentcount").innerHTML = `${data.commentcount} Comments`;
+    })
+    //event like
+    document.getElementById("like-<%=post._id%>").addEventListener("click", () => {
+        if(document.getElementById("Like-<%=post._id%>").style.color!="blue"){
+           document.getElementById("likeCount-<%=post._id%>").innerHTML = `<%=2+post.like.length%>`;
+         }
+        document.getElementById("Like-<%=post._id%>").style.color = "blue";
+        socket.emit("like_post", {
+            id: "<%=post._id%>",
+            userSession: "<%=userSession.name%>"
+
+        });
+    })
+    socket.on("server_send_likecount_<%=post._id%>", (data) => {
+        console.log(data.likecount)
+        document.getElementById("likeCount-<%=post._id%>").innerHTML = `${data.likecount}`;
+    })
+</script>

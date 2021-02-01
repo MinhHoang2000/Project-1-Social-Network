@@ -1,0 +1,198 @@
+/*------------------------------------
+  Messages
+------------------------------------*/
+.friend-list{
+  border-radius: 5px; 
+  border-width: 1px; 
+  border-style: solid; 
+  border-color:#7f7f7f; 
+  min-height: 80px; 
+  padding: 10px; 
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.messages-box {
+  max-height: 18rem;
+  overflow: auto;
+}
+
+.online-circle {
+  border-radius: 5rem;
+  width: 5rem;
+  height: 5rem;
+}
+
+.messages-title {
+  float: right;
+  margin: 0px 5px;
+}
+
+.message-img {
+  float: right;
+  margin: 0px 5px;
+}
+
+.message-header {
+  text-align: right;
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+.messages-p{
+  max-width: 18rem;
+  
+}
+.text-editor {
+  min-height: 18rem;
+  
+}
+
+.messages-list li.messages-you .messages-title {
+  float: left;
+}
+
+.messages-list li.messages-you .message-img {
+  float: left;
+}
+
+.messages-list li.messages-you p {
+  float: left;
+  text-align: left;
+}
+
+.messages-list li.messages-you .message-header {
+  text-align: left;
+}
+.messages-list li.messages-you a:hover {
+  color: blue;
+}
+.messages-list li p {
+  max-width: 60%;
+  padding: 5px;
+  border: #e6e7e9 1px solid;
+}
+
+.messages-list li.messages-me p {
+  float: right;
+}
+.ql-editor p {
+  font-size: 1rem;
+}
+.image_file_me{
+  width: 70%;
+  height: 70%;
+  float: right;
+  margin: 5px;
+ 
+}
+.image_file_me img,video{
+  max-width: 60%;
+  max-height: 60%;
+  float: right;
+}
+.image_file_you{
+  width: 70%;
+  height: 70%;
+  margin: 5px;
+  
+}
+.image_file_you img,video{
+  max-width: 60%;
+  max-height: 60%;
+  float: left;
+}
+.text-muted{
+  font-size: 15px;
+}
+/*check seen*/
+#check-seen{
+  color: #7f7f7f;
+  font-size: 10px;
+  float: right;
+  margin-top: 5px;
+}
+.foot
+{   height: 10%;
+	width: 100%;
+	background-color: white;
+	text-align: center;
+}
+
+
+.foot ul
+{
+	padding: 5px;
+	list-style-type: none;
+	text-align: center;
+	margin: 10px;
+	border-radius: 5px;
+}
+
+.foot ul li
+{
+	display: inline;
+}
+
+.foot ul li a
+{
+	text-decoration: none;
+	padding: 10px;
+	color: #615D5E;
+	font-size: 16px;
+}
+
+.foot ul li a:hover
+{
+	color: #009688;
+	font-size: 17px;
+}
+/* typing */
+.typing {
+  align-items: center;
+  display: flex;
+  height: 17px;
+}
+
+.typing_container .typing_dot{
+  background-color: #90949c;
+}
+#typing p{
+  margin-left: 5px;
+  height: 4px;
+  width: 30%px;
+  color: #90949c;
+  font-size: 12px;
+  vertical-align: middle;
+}
+.typing_dot {
+  -webkit-animation: mercuryTypingAnimation 1.5s infinite ease-in-out;
+  border-radius: 2px;
+  display: inline-block;
+  height: 4px;
+  margin-left: 2px;
+  width: 4px;
+  margin-bottom: 1px;
+}
+
+@-webkit-keyframes mercuryTypingAnimation{
+0%{
+-webkit-transform:translateY(0px)
+}
+28%{
+-webkit-transform:translateY(-5px)
+}
+44%{
+-webkit-transform:translateY(0px)
+}
+}
+
+.typing_dot:nth-child(1){
+-webkit-animation-delay:200ms;
+}
+.typing_dot:nth-child(2){
+-webkit-animation-delay:300ms;
+}
+.typing_dot:nth-child(3){
+-webkit-animation-delay:400ms;
+}

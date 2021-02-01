@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Profile</title>
+    <link rel="icon" type="image/png" href="/public/image/logo icon/logo_icon.png" sizes="16x16">
+    <%- include('header') -%>
+</head>
+<body>
+    <div class="container rounded bg-white mt-5">
+        <div class="row">
+            <div class="col-md-4 border-right" style="margin-bottom: 75px;">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <img class="rounded-circle mt-5" src="/public/image/avatar/<%=user.avatar%>" width="90" height="90">
+                    <span class="font-weight-bold">
+                        <%=user.name%>
+                    </span>
+                    <span class="text-black-50">
+                        <%=user.fullname%>
+                    </span>
+                    <span>
+                        <%=user.phone%>
+                    </span>
+                    <span>
+                        <%=user.country%>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="p-3 py-5" style="max-width: 720px;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex flex-row align-items-center back"><i
+                                class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                            <h6><a id="ava" href="/profile/<%=user.name%>">Back to home</a></h6>
+                        </div>
+                    </div>
+                    <form id="file_ul" action="/editprofile" method="POST" enctype="multipart/form-data">
+                        <div class="custom-file mb-3">
+                            <input type="file" class="custom-file-input" id="customFile" name="avatar">
+                            <label id="custom-file-label" class="custom-file-label" for="customFile">Update avatar</label>
+                            <script>
+                                var f_name=document.getElementById("customFile");
+                                document.getElementById("customFile").addEventListener("change",()=>{
+                                    f_name=f_name.value;
+                                    f_name=f_name.replace(/C:\\fakepath\\/i, '');
+                                    document.getElementById("custom-file-label").innerHTML=f_name;
+                                })
+                            </script>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="First Name"
+                                    name="fname" value="<%=user.fname%>"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Last Name"
+                                    name="lname" value="<%=user.lname%>"></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Age" name="age"
+                                    value="<%=user.age%>"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Phone Number"
+                                    name="phone" value="<%=user.phone%>"></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Address"
+                                    name="address" value="<%=user.address%>"></div>
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Country"
+                                    name="country" value="<%=user.country%>"> </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6"><input type="text" class="form-control" placeholder="Company"
+                                    name="company" value="<%=user.company%>"></div>
+                            <div class="col-md-6"><input type="date" class="form-control" name="birthday"></div>
+                        </div>
+                        <div class="mt-5 text-right"><button class="btn btn-primary profile-button" type="submit">Save
+                                Profile</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

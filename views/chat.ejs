@@ -1,0 +1,275 @@
+<html>
+<head>
+    <title>Chat</title>
+    <link rel="stylesheet" type="text/css" href="/public/CSS/chat.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <%- include('header') -%>
+    <script>
+              var socket = io();
+              socket.emit("new_user_message", {
+                  userSession: "<%=userSession.name%>",
+                  user: "<%=user.name%>"
+              })
+    </script>
+</head>
+<body>
+    <%- include('navbar') -%>
+    <div class="container-fluid">
+        <div class="row  mb-4">
+            <!--Left srceen , list messages-->
+            <div class="col-md-3">
+                <div class="card" style="min-height: 620px;">
+                    <div class="card-header">
+                            <p style="color: black;">Chat</p>
+                            <form class="form-inline">
+                              <input class="form-control mr-md-2" type="search" placeholder="Search" aria-label="Search" style="width:100%">
+                            </form>
+                    </div>
+                    <div class="card-body ">
+                        <!--Loop-->
+                        <% userSession.friends.forEach(friend=>{ %>
+                        <!--Avatar and username-->
+                          <a href="/send_message/<%=userSession.name%>/<%=friend.username%>" style="text-decoration: none;">
+                            <div id="frame-<%=friend.username%>" class="friend-list" >
+                                <div style="text-align: center;">
+                                    <img class="rounded-circle" src="/public/image/avatar/<%=friend.avatar%>" alt="" style="float:left;width: 25%; max-width: 50px;" >
+                                    <div style="color:black ">
+                                       <span style="display: inline; font-size: 1.5vw;"><%=friend.username%></span> 
+                                    <% if(online.includes(friend.username)==true){ %>
+                                    <i class="fas fa-circle" style="color:#0ad10a; font-size: 7px;"></i>
+                                    <% }else{ %>
+                                    <i class="fas fa-circle" style="color:#7f7f7f; font-size: 7px;"></i>
+                                    <% } %>
+                                    <br/>
+                                    <!--Last message-->
+                                    <span style="font-size: 1vw; color:#7f7f7f;">                                     
+                                        <% var rs=list.find((name)=>{
+                                            return name.username==friend.username;
+                                        });
+                                        if(rs!=undefined){ 
+                                           if(rs.check==1){ %>
+                                                   Bạn: <%=rs.message%>
+                                            <% } else{ %>
+                                                   <%=rs.message%>
+                                           <% }
+                                         } %>
+                                    </span>
+                                    </div>   
+                                </div>             
+                            </div>
+                        </a>
+                        <% }) %>
+                    </div>
+                    <script>
+                       $("#frame-<%=user.name%>").css("background-color","#e8e8e8");
+                    </script>
+                </div>
+            </div>
+            <!--Mid screen , all chat of user receive and user send-->
+            <div class="col-md-6">
+                <div class="card " style="box-shadow: #7f7f7f; max-height: 620px;min-height: 620px;">
+                    <!--Header : infomation of user receive-->
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2">
+                                    <img class="rounded-circle" width="48" height="48"src="/public/image/avatar/<%=user.avatar%>" alt="">
+                                </div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0"><a href="/profile/<%=user.name%>"><%=user.name%></a>
+                                        <% if(online.includes(user.name)==true){ %>
+                                        <i class="fas fa-circle" style="color:#0ad10a; font-size: 10px; "></i>
+                                        <% }else{ %>
+                                        <i class="fas fa-circle" style="color:#7f7f7f; font-size: 10px; "></i>
+                                        <% } %>
+                                    </div>
+                                    <div class="h7 text-muted"><%=user.fullname%></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="dropdown">
+                                    <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-h"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                        <a class="dropdown-item" href="#">Delete</a>
+                                        <a class="dropdown-item" href="#">View Profile</a>
+                                        <a class="dropdown-item" href="#">Report</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Body : show chats-->
+                    <div class="card-body messages-box" id="message-box-12">
+                        <ul class="list-unstyled messages-list" id="container_mes_1">
+                            <!--If check == 1 , message of user send . If check == 0 , message of user receive -->
+                            <% if(data!=0){
+                                    data.message.forEach(mes=>{    
+                                          if(mes.check==1){  %>
+                            <li class="messages-me clearfix">
+                                <div class="message-body clearfix">
+                                    <div class="message-header"  >
+                                        <small class="time-messages text-muted">
+                                            <span class="fas fa-time"></span><%=mes.date%>
+                                        </small>
+                                     </div>
+                                     <div class="image_file_me" >
+                                        <% if(mes.file_name != ""){  
+                                             if(mes.type == "jpg"||mes.type == "png"||mes.type == "gif"){  %>
+                                        <img src="/public/image/<%=mes.file_name%>"  class="img-fluid" alt="" style="border-radius: 10px;" >
+                                        <% } if(mes.type == "mp4"||mes.type == "avi"||mes.type == "flv"||mes.type == "mov"||mes.type == "3gp"){ %>
+                                        <video controls style="float: right;">
+                                                <source src="/public/image/<%=mes.file_name%>" type="video/mp4">
+                                        </video>
+                                        <% } else{ 
+                                            if(mes.type != "jpg" && mes.type != "png" && mes.type != "gif") {%>
+                                         <a href="/public/image/<%=mes.file_name%>" download>
+                                             <p class="messages-p" style="border-radius: 14px 14px 0px 14px; background-color:#F2F3F5; color: black;">
+                                                 <i class="fas fa-file"></i>       <%=mes.file_name%>
+                                             </p>
+                                        </a> 
+                                        <% }
+                                          }  
+                                        } %>
+                                    </div>
+                                </div>
+                                <% if(mes.Mes!="") {  
+                                    var index=mes.Mes.indexOf("https://");
+                                    if(index!=-1){
+                                        var url=mes.Mes.slice(index,mes.Mes.length);
+                                        var mess=mes.Mes.slice(0,index); %>
+                                        <p class="messages-p" style="border-radius: 14px 14px 0px 14px; background-color:#1877F2; color: white;"><%=mess%>
+                                            <a href="<%=url%>" target="_blank" style="color:white; text-decoration:underline white solid" ><%=url%></a>
+                                        </p>
+                                    <% } else{ %>
+                                         <p class="messages-p" style="border-radius: 14px 14px 0px 14px; background-color:#1877F2; color: white;"><%=mes.Mes%></p>
+                                    <% }
+                                 } %>  
+                            </li>
+                            <% } else{  %>
+                            <li class="messages-you clearfix">
+                                <div class="message-body clearfix">
+                                    <div class="message-header" style="height: 39px;">
+                                        <a class="messages-title" href="/profile/<%=user.name%>"><img src="/public/image/avatar/<%=user.avatar%>" alt="User Avatar"
+                                            class="avatar-sm border rounded-circle" width="35" height="35"> <%=user.name%></a>  
+                                    </div>                                     
+                                    <div class="image_file_you">
+                                            <% if(mes.file_name!=""){  
+                                                if(mes.type=="jpg"||mes.type=="png"||mes.type=="gif"){  %>    
+                                                <img src="/public/image/<%=mes.file_name%>"  class="img-fluid" alt="" style="border-radius: 10px;" >
+                                                <% } if(mes.type=="mp4"||mes.type=="avi"||mes.type=="flv"||mes.type=="mov"||mes.type=="3gp"){ %>
+                                                    <video controls  >
+                                                        <source src="/public/image/<%=mes.file_name%>" >
+                                                    </video>
+                                                 <% }  else{ 
+                                                    if(mes.type!="jpg" && mes.type!="png" && mes.type!="gif") {%>
+                                                    <a href="/public/image/<%=mes.file_name%>" download>
+                                                        <p class="messages-p" style="border-radius: 14px 14px 0px 14px; background-color:#F2F3F5; color: black;">
+                                                            <i class="fas fa-file"></i>       <%=mes.file_name%>
+                                                        </p>
+                                                   </a>
+                                                 <% }
+                                                }
+                                            }%>
+                                    </div>
+                                </div>
+                                <% if(mes.Mes!="") {  
+                                    var index=mes.Mes.indexOf("https://");
+                                    if(index!=-1){
+                                        var url=mes.Mes.slice(index,mes.Mes.length-1);
+                                        var mess=mes.Mes.slice(0,index); %>
+                                        <p class="messages-p" style="background-color: #F2F3F5; border-radius: 14px;"><%=mess%>
+                                            <a href="<%=url%>" target="_blank" style="color:black; text-decoration:underline black solid" ><%=url%></a>
+                                        </p>
+                                    <% } else{ %>
+                                         <p class="messages-p" style="background-color: #F2F3F5; border-radius: 14px;"><%=mes.Mes%></p>
+                                    <% }
+                                 } %>  
+                                
+                            </li>
+                                  <% }
+                               })
+                            } %>
+                            <img src="/public/image/avatar/<%=user.avatar%>" alt="User Avatar" class="avatar-sm border rounded-circle" id="seen" width="12" height="12" style="float: right; display: none;">
+                        </ul>
+                        <!--user typing-->
+                        <div class="typing_container">
+                            <div class="typing" id="typing" style="display: none;">
+                                 <p><%=user.name%> is typing </p>
+                                 <div class="typing_dot"></div>
+                                 <div class="typing_dot"></div>
+                                 <div class="typing_dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        var element = document.getElementById("message-box-12");
+                         element.scrollTop = element.scrollHeight;
+                        socket.on("done",()=>{
+                        document.getElementById("typing").style.display="none";
+                        })
+                        document.addEventListener("click",()=>{
+                            socket.emit("stop_typing");
+                        })
+                        socket.on("stop_typing_server",()=>{
+                            document.getElementById("typing").style.display="none";
+                        })
+                    </script>
+                    <div class="card-footer">
+                        <form action="/send_message/<%=userSession.name%>/<%=user.name%>/up_file" method="POST" enctype="multipart/form-data" id="send_message" style="margin:auto">
+                            <div class="input-group">
+                                <div style="padding: 5px 10px 0px 0px;">
+                                    <label for="image_input">
+                                        <i class="far fa-images fa-2x"></i>
+                                    </label>
+                                    <input id="image_input" type="file" style="display: none;" name="up_image">
+                                </div>
+                                <input id="text_value" type="text" name="messages" class="form-control input-sm"
+                                    placeholder="Type your message here..." />
+                                <div style="padding: 5px 0px 0px 10px;">
+                                    <label for="send_mess">
+                                        <i class="fas fa-paper-plane fa-2x"></i>
+                                    </label>
+                                    <button id="send_mess" class="btn btn-primary" type="submit"
+                                        style="display: none;"></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <%- include('realtime_chat') -%>
+                </div>
+            </div>
+            <!--right screen, all image sended by 2 user-->
+            <div class="col-md-3">
+                <div class="card" style="min-height: 620px;">
+                    <div class="card-header" style="text-align: center;" >
+                        <img class="rounded-circle" width="48" height="48" style="align-self: center;" src="/public/image/avatar/<%=user.avatar%>" alt="">
+                        <p style="min-width: 1.4vw; margin-bottom: 5px;"><%=user.fullname%></p>
+                        <% if(online.includes(user.name)){ %>
+                            <span style="color: #7f7f7f; font-size: 1vw;">Đang hoạt động</span>
+                        <% } else { %>
+                            <span style="color: #7f7f7f; font-size: 1vw;">Không hoạt động</span>
+                        <% } %> 
+                    </div>
+                    <div class="card-body" style="max-height: 470px; overflow: auto;">
+                        <p style="text-align: center;font-size: 1.2vw; margin-bottom: 8px;">Hình ảnh được chia sẻ </p>
+                          <% if(data!=0){
+                            data.message.forEach(mes=>{ 
+                                if(mes.file_name!=""){
+                                    if(mes.type=="png"||mes.type=="jpg"||mes.type=="gif"){ %>
+                                    <img src="/public/image/<%=mes.file_name%>" alt="" class="img-fluid" style="margin-bottom: 6px;">
+                               <% }
+                               }
+                            })
+                          } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

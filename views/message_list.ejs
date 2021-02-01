@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title>Message</title>
+    <link rel="stylesheet" type="text/css" href="/public/CSS/message_list.css">
+    <%- include('header') -%>
+  </head>
+  <body>
+    <!--navbar-->
+    <div class="navbar navbar-expand-lg navbar-light bg-light" >
+      <a class="navbar-brand" href="/newfeed" style="color: blue;">fakebook</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" href="/newfeed">Newfeed <span class="sr-only"></span></a>
+              </li>
+              <li class="nav-item">
+                  <li>
+                      <a class="nav-link" href="/profile/<%=userSession%>"> Profile </a>
+                  </li>  
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/message">Message</a>
+              </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Option
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/message">Friends</a>
+                    <a class="dropdown-item" href="#">Setting</a>
+                    <a class="dropdown-item" href="/logout">Log out</a>
+                  </div>
+                </li> 
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button type="button" class="btn btn-success">Search</button>
+          </form>
+      </div>
+  </div>
+  <!--Body-->
+    <div class="container mt-3 mb-4">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="user-dashboard-info-box table-responsive  mb-0 bg-white p-4 shadow-sm">
+            <table class="table ">
+              <thead>
+                <tr>
+                  <th>User Name</th>
+                  <th class="text-center">Status</th>
+                  <th class="action text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if(message_list.friends.length>0) { 
+                    message_list.friends.forEach(friend=>{  %> 
+                <tr class="candidates-list">
+                  <td class="title">
+                    <div class="thumb">
+                      <img class="img-fluid" src="/public/image/avatar/<%=friend.avatar%>" alt="Not find">
+                    </div>
+                    <div class="candidate-list-details">
+                      <div class="candidate-list-info">
+                        <div class="candidate-list-title">
+                         <% if(online.includes(friend.username)==true){ %>
+                          <h5 class="mb-0"><a href="/profile/<%=friend.username%>"><%=friend.username%></a>  <i class="fas fa-circle" style="color:#0ad10a; font-size: 10px; "></i></h5>
+                          <% }else{ %>
+                          <h5 class="mb-0"><a href="/profile/<%=friend.username%>"><%=friend.username%></a>  <i class="fas fa-circle" style="color:#7f7f7f; font-size: 10px; "></i></h5>
+                          <% } %>
+                        </div>
+                        <div class="candidate-list-option">
+                          <ul class="list-unstyled">
+                            <li><i class="fas fa-filter pr-1"></i><%=friend.company%></li>
+                            <li><i class="fas fa-map-marker-alt pr-1"></i><%=friend.address%></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="candidate-list-favourite-time text-center">
+                    <% if(online.includes(friend.username)==true){ %>
+                    <p>Online</p>
+                    <% }else{ %>
+                      <p>Offline</p>
+                    <% } %>
+                  </td>
+                  <td style="text-align: center;">
+                    <a href="/send_message/<%=userSession%>/<%=friend.username%>" style="align-items: center;"><i class="fab fa-facebook-messenger" style="font-size: 40px;"></i></a>
+                  </td>
+                </tr>
+                <% }) ;
+              } %> 
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+  </body>
+</html>
+
+

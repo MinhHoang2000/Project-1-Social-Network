@@ -1,0 +1,268 @@
+body{
+    margin-top:20px;
+    background:#eee;
+}
+.profile{
+    border-bottom: solid #7f7f7f 2px;
+}
+.profile-header {
+   min-height: 380px;
+    position: relative;
+    overflow: hidden;
+    /* border-bottom: solid #7f7f7f 2px; */
+}
+
+.profile-header .profile-header-cover {
+    height: 390px;
+    background-image: url(/public/image/background/wallpaper2.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0
+}
+
+.profile-header .profile-header-content {
+    margin-top: 12%;
+    color: #fff;
+    padding: 18px
+}
+.profile-header-img {
+   margin: auto;
+   margin-top: 82px;
+    width: 200px;
+    height: 210px;
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+    /* margin: 0 0 -20px; */
+    padding: 3px;
+    
+}
+
+.profile-header-img img {
+    max-width: 100%
+}
+
+.profile-header-info h4 {
+    font-weight: 500;
+    color: #fff
+}
+/*Add friend , edit profile*/
+#add{
+    margin: auto;
+}
+button:hover{
+    background-color:#ECF3FF ;
+}
+.add-friend{
+    font-size: 15px;
+    background-color:  #F2F3F5;
+    color: #1877F2;
+    margin: auto;
+    align-self: center;
+    max-height: 25px;
+    min-width: 110px;
+    border: solid black 1px;
+    border-radius: 3.5px;
+}
+.message{
+        font-size: 15px;
+        background-color: #F2F3F5;
+        color: #1877F2;
+        margin: auto;
+        align-self: center;
+        max-height: 25px;
+        min-width: 110px;
+        border: solid black 1px;
+        border-radius: 3.5px;
+}
+.edit{
+    font-size: 15px;
+    background-color: #F2F3F5;
+    color: black;
+    margin: auto;
+    align-self: center;
+    max-height: 25px;
+    min-width: 110px;
+    border: solid black 1px;
+    border-radius: 3.5px;
+}
+.profile-header-img+.profile-header-info {
+    margin-left: 140px
+}
+
+.profile-header .profile-header-content,
+.profile-header .profile-header-tab {
+    position: relative
+}
+.profile-header-info {
+    border-top: solid #929ba1 2px ;
+}
+.profile-header-info .profile-header-tab {
+    border-top: solid #929ba1 1px ;
+    background: #fff;
+    list-style-type: none;
+    margin: -10px 0 0;
+    padding: 0 0 0 140px;
+    white-space: nowrap;
+    border-radius: 0
+}
+
+.profile-header-info .profile-header-tab>li {
+    display: inline-block;
+    margin: 0   
+}
+
+.profile-header-info .profile-header-tab>li>a {
+    display: block;
+    color: #929ba1;
+    line-height: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12px;
+    border: none
+}
+
+.profile-header-info .profile-header-tab>li.active>a,
+.profile-header-info .profile-header-tab>li>a.active {
+    color: #242a30
+}
+/**/
+.list{
+    text-align: center;
+    margin: auto;
+    margin-top: 20px;
+    min-width: 100px;
+    max-width: 650px;
+    min-height: 30px;
+    max-height: 40px;
+    border-radius: 4px
+}
+.profile-content {
+    padding: 25px;
+    border-radius: 4px
+}
+
+/* .profile-image {
+    height: 175px;
+    line-height: 175px;
+    text-align: center;
+    font-size: 72px;
+    margin-bottom: 10px;
+    border: 2px solid #E2E7EB;
+    overflow: hidden;
+    border-radius: 4px
+}
+
+.profile-image img {
+    display: block;
+    max-width: 100%
+} */
+
+.bg-white {
+    background-color: #fff!important;
+}
+.p-10 {
+    padding: 10px!important;
+}
+.m-b-2 {
+    margin-bottom: 2px!important;
+}
+
+.timeline {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: relative
+}
+
+.timeline:before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    width: 5px;
+    background: #2d353c;
+    left: 20%;
+    margin-left: -2.5px
+}
+
+.timeline>li {
+    position: relative;
+    min-height: 50px;
+    padding: 20px 0
+}
+
+.timeline .timeline-time {
+    position: absolute;
+    left: 0;
+    width: 18%;
+    text-align: right;
+    top: 30px
+}
+
+.timeline .timeline-time .date,
+.timeline .timeline-time .time {
+    display: block;
+    font-weight: 600
+}
+
+.timeline .timeline-time .date {
+    line-height: 16px;
+    font-size: 12px
+}
+
+.timeline .timeline-time .time {
+    line-height: 24px;
+    font-size: 20px;
+    color: #242a30
+}
+
+.timeline .timeline-icon {
+    left: 15%;
+    position: absolute;
+    width: 10%;
+    text-align: center;
+    top: 40px
+}
+
+.timeline .timeline-body {
+    margin-left: 23%;
+    margin-right: 17%;
+    background: #fff;
+    position: relative;
+    padding: 20px 25px;
+    border-radius: 6px
+}
+
+.timeline-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e7eb;
+    line-height: 30px
+}
+
+.timeline img {
+    max-width: 100%;
+    display: block
+}
+
+.timeline-content {
+    letter-spacing: .25px;
+    line-height: 18px;
+    font-size: 13px
+}
+
+.timeline-title {
+    margin-top: 0
+}
+
+.timeline-footer {
+    background: #fff;
+    border-top: 1px solid #e2e7ec;
+    padding-top: 15px
+}

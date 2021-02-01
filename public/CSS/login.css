@@ -1,0 +1,232 @@
+body{
+	height: 100%;
+	width: 100%;
+	margin:0px;
+	padding:0px;
+	font-family: Helvetica, Arial, sans-serif;
+	resize: both;
+    overflow: auto;
+}
+
+/*========HEADER SECTION ===========*/
+
+.header
+{
+	
+	background-color: #45619D;
+	overflow: hidden;
+}
+.loginS{
+	   float: right;
+	   padding-right: 80px;
+	   padding-top: 5px;
+}
+/*---LOGO--*/
+#logo{
+	margin-top: 25px;
+	margin-left: 10%;
+	float: left;
+	width: 100px;
+	height: 27px;
+}
+.logo{
+ box-shadow: 0px,5px,black;
+   margin: auto;
+   /* padding-top: 25px;
+   padding-left: 180px; */
+   float: left;
+   text-decoration: none;
+   color: white;
+   display: block;
+
+}
+
+
+
+
+.loginuser /*--FORM--*/
+{
+	float:right;
+	
+	color: white;
+	font-size: 14px;
+	;
+}
+
+#login tr td .inputtext 
+{
+	border: 1px solid black;
+	height: 19px;
+}
+
+#login tr td 
+{
+	border: 0px;
+}
+
+#logpassword
+{
+	font-size: 24px;
+}
+
+#loginbutton
+{
+	border: 1px;
+	
+	background-color: #43d854;
+	height: 22px;
+	color:white;
+	font-size:14px;
+}
+
+#loginbutton:hover
+{
+	background-color: #009688;
+	border: 1px solid black;
+}
+
+#loginbutton:active
+{
+	transform: translateX(8px);
+	box-shadow: 4px 5px 4px #666;
+}
+
+
+/*==========MAIN SECTION ========*/
+
+.signup /* ---- SIGNUP SECTION --- */
+{    
+   margin: auto;
+}
+
+
+.signup h1 /*---- SIGNUP HEADING --*/
+{
+	font-size: 45px;
+}
+
+.signup .inputtext2
+{
+	width: 250px;
+	height: 32px;
+	font-size: 18px;
+	border-radius: 5px;
+	border: 1px solid #bdc7d8;
+	padding-left: 8px 10px;
+}
+
+#signuptable tr td
+{
+	padding-bottom: 10px;
+	padding-right: 10px;
+	
+}
+
+#signuptable tr #dob select
+{
+	padding: 0px;
+	margin: 0px -4px;
+	border:2px solid #bdc7d8;
+	height: 32px;
+	font-size: 13px;
+}
+
+#joinnowbttn /*---JOING NOW BUTTON ---*/
+{   float: left;
+    text-align: center;
+	border:0px;
+	width: 100%;
+	height: 34px;
+	font-size: 18px;
+	background-color: #00aeef;
+	color:white;
+	box-shadow: 0 6px 4px #999;
+	padding-right: 10px;
+}
+
+#joinnowbttn:hover
+{
+	background-color: #4F82C3;
+}
+
+#joinnowbttn:active
+{
+  background-color: #2196F3;
+  box-shadow: 0 5px 4px #666;
+  transform: translateY(8px);
+}
+
+#joinbut
+{
+	height: 130px;
+}
+
+
+/*====== FOOTER ===========*/
+
+
+
+.foot
+{   height: 10%;
+	width: 100%;
+	background-color: white;
+	text-align: center;
+}
+
+
+.foot ul
+{
+	padding: 5px;
+	list-style-type: none;
+	text-align: center;
+	margin: 10px;
+	border-radius: 5px;
+}
+
+.foot ul li
+{
+	display: inline;
+}
+
+.foot ul li a
+{
+	text-decoration: none;
+	padding: 10px;
+	color: #615D5E;
+	font-size: 16px;
+}
+
+.foot ul li a:hover
+{
+	color: #009688;
+	font-size: 17px;
+}
+
+.foot p
+{
+	color: #666666;
+	text-align: center;
+	padding-bottom: 2%;
+	padding-top: 8px;
+	font-size: 14px;
+}
+
+.logoletter:hover
+{
+	animation: shake 0.5s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}

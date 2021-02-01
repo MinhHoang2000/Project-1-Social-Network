@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Profile</title>
+   <link rel="stylesheet" type="text/css" href="/public/CSS/profile.css">
+   <link rel="stylesheet" type="text/css" href="/public/CSS/newfeed.css">
+   <%- include('header') -%>
+   <script>
+      
+   </script>
+</head>
+<body>
+   <%- include('navbar') -%>
+   <!--body-->
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div id="content" class="content content-full-width">
+               <div class="profile">
+                  <div class="profile-header">
+                     <div class="profile-header-cover"></div>
+                     <div class="profile-header-content">
+                        <div class="profile-header-img">
+                           <img class="rounded-circle " src="/public/image/avatar/<%=userProfile.avatar%>" width="200" height="200" walt="" style="border-radius: 10px; border-color: #4c4c4c; border-style: solid;">
+                           
+                        </div>
+                        
+                     </div>
+                  </div>
+                  <div class="name" style="text-align: center;">
+                     <h3 class="m-t-10 m-b-5">
+                        <%=userProfile.name%>
+                     </h3>
+                     <p class="m-b-10" style="font-size: 18px;">
+                        ( <%=userProfile.fullname%> )
+                     </p>
+                  </div>
+               </div>
+               <div class="profile-header-info">
+                  <ul class="profile-header-tab nav nav-tabs">
+                     <li class="nav-item"><a href="#profile-post" class="nav-link active show"
+                           data-toggle="tab">POSTS</a></li>
+                     <li class="nav-item"><a href="#profile-about" class="nav-link" data-toggle="tab">ABOUT</a></li>
+                     <li class="nav-item"><a href="#profile-photos" class="nav-link" data-toggle="tab">PHOTOS</a>
+                     </li>
+                     <li class="nav-item"><a href="#profile-videos" class="nav-link" data-toggle="tab">VIDEOS</a>
+                     </li>
+                     <li class="nav-item"><a href="#profile-friends" class="nav-link" data-toggle="tab">FRIENDS</a>
+                     </li>
+                    <div id="add">
+                     <% if(userProfile.name==userSession.name){ %>
+                        <form action="/editprofile" method="GET">
+                        <button class="edit">Edit Profile</button>
+                        <button class="edit" type="button">Security</button>
+                        <button class="edit" style="min-width :35px;" type="button">...</button>
+                        </form>
+                     <% } %>
+                     <% if(isFriend==false){ %>
+                        <button class="add-friend">Add Friend</button>
+                        <button class="message" type="button">Report</button>
+                        <button class="message" style="min-width :35px;" type="button">...</button>
+                     <%} %>
+                     <%if(isMessage==true&&isFriend==true){%>
+                           <form action="/send_message/<%=userSession.name%>/<%=userProfile.name%>"
+                                    method="GET">
+                           <button class="message">Message</button>
+                           <button class="message" type="button">Unfriend</button>
+                           <button class="message" style="min-width :35px;" type="button">...</button>
+                           </form>
+                     <% } %>    
+                    </div>
+                  </ul>      
+                  <script>
+                     $(document).ready(()=>{
+                        $('.add-friend').click(()=>{
+                           $.ajax({
+                              url:"http://localhost:3000/add_friend/<%=userProfile.name%>",
+                              type:'POST',
+                              success:(kq)=>{
+                                 $('#add').html(kq);
+                              }
+                           })
+                        })
+                     })
+                  </script>       
+               </div>
+               <div class="card list">
+                  <p>Timeline</p>
+               </div>      
+               <div class="profile-content">
+                  <div class="tab-content p-0">
+                     <div class="tab-pane fade active show" id="profile-post">
+                        <ul class="timeline">
+                           <% if(posts.length>0){
+                              posts.forEach(post=>{ %>
+                              <li>
+                                 <div class="timeline-time">
+                                    <span class="date">
+                                       <%=post.date.day%>/<%=post.date.month+1%>/<%=post.date.year%>
+                                    </span>
+                                    <span class="time">
+                                       <%=post.date.time_hours%>:<%=post.date.time_minutes%>
+                                    </span>
+                                 </div>
+                                 <div class="timeline-body">
+                                    <div class="card gedf-card">
+                                       <div class="card-header">
+                                          <div class="d-flex justify-content-between align-items-center">
+                                             <div class="d-flex justify-content-between align-items-center">
+                                                <div class="mr-2">
+                                                   <img class="rounded-circle" width="45" height="45"
+                                                      src="/public/image/avatar/<%=post.avatar%>" alt="">
+                                                </div>
+                                                <div class="ml-2">
+                                                   <div class="h5 m-0"><a href="/profile/<%=post.username%>">
+                                                         <%=post.username%>
+                                                      </a>
+                                                   </div>
+                                                   <div class="h7 text-muted">
+                                                      <%=post.fullname%>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div>
+                                                <div class="dropdown">
+                                                   <button class="btn btn-link dropdown-toggle" type="button"
+                                                      id="gedf-drop1" data-toggle="dropdown" aria-haspopup="true"
+                                                      aria-expanded="false">
+                                                      <i class="fa fa-ellipsis-h"></i>
+                                                   </button>
+                                                   <div class="dropdown-menu dropdown-menu-right"
+                                                      aria-labelledby="gedf-drop1">
+                                                      <div class="h6 dropdown-header">Configuration</div>
+                                                      <a class="dropdown-item" href="#">Save</a>
+                                                      <a class="dropdown-item" href="#">Hide</a>
+                                                      <a class="dropdown-item" href="#">Report</a>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+
+                                       </div>
+                                       <div class="card-body">
+                                          <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o">
+                                                <% let day=new Date().getDate(); let hour=new Date().getHours(); let
+                                                   minutes=new Date().getMinutes(); %>
+                                                   <% if(day-post.date.day <1){ %>
+                                                   <% if(hour-post.date.time_hours<=1){ %>
+                                                   <% if(post.date.time_minutes>minutes){ %>
+                                                      about <%=minutes-post.date.time_minutes+60%> min ago
+                                                   <%}else{%>
+                                                   <% if(minutes-post.date.time_minutes<1){ %>
+                                                      just now
+                                                   <% }else{ %>
+                                                   <% if(minutes>post.date.time_minutes){ %>
+                                                      about <%=minutes-post.date.time_minutes%> min ago
+                                                         <% } 
+                                                        } 
+                                                     } %>
+                                                   <%}else{%>
+                                                      about <%=hour-post.date.time_hours%> h ago
+                                                   <%}%>
+                                                   <% }else{ %>
+                                                        about <%=day-post.date.day%> d ago
+                                                <%} %>
+                                             </i>
+                                          </div>
+                                          <a class="card-link" href="/post/<%= post._id %>">
+                                             <p class="card-text" style="color: black; font-size: 32px;">
+                                                <%=post.description%>
+                                             </p>
+                                             <% if(post.image!="" ) { %>
+                                                <img src="/public/image/<%= post.image %>"
+                                                   style="height: 100%;width: 100%; top: 0; left: 0;;">
+                                             <% } %>
+                                          </a>
+                                       </div>
+                                       <div class="card-footer">
+                                          <div class="timeline-likes">
+                                             <div class="stats-right">
+                                                <span class="stats-text">2 Shares</span>
+                                                <% if(post.comment.length>0){ %>
+                                                   <span class="stats-text" id="commentcount">
+                                                      <%=post.comment.length%>
+                                                         Comments
+                                                   </span>
+                                                   <% }else{ %>
+                                                      <span class="stats-text" id="commentcount"></span>
+                                                      <%} %>
+                                             </div>
+                                             <div class="stats">
+                                                <span class="fa-stack fa-fw stats-icon">
+                                                   <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                                   <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                                <span class="stats-text">
+                                                   <%=1+post.like.length%>
+                                                </span>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                              </li>
+                              <% }) 
+                           } %>
+                                 <li>
+                                    <div class="timeline-body" style="text-align: center;">
+                                       Loading...
+                                    </div>
+                                 </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</body>
+</html>

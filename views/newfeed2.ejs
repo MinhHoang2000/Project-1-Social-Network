@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Newfeed</title>
+    <link rel="stylesheet" type="text/css" href="/public/CSS/newfeed.css">
+    <%- include('header') -%>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket=io();
+
+    </script>
+</head>
+
+<body>
+    <%- include('navbar') -%>
+    <div class="container-fluid gedf-wrapper">
+        <div class="row">
+            <!--Left screen-->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="h5"><%=userSession.name%></div>
+                        <div class="h7 text-muted">Fullname : <%=userSession.fullname%></div>
+                        <div class="h7">
+                            Hòa đồng vui vẻ thân thiện
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="h7 text-muted">Friends</div>
+                            <div class="h6"><%=userSession.friends.length%></div>
+                        </li>
+                        <li class="list-group-item">Group</li>
+                        <li class="list-group-item">Page</li>
+                        <li class="list-group-item">Video</li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <!--Mid screen-->  
+            <div class="col-md-6 gedf-main">
+                <!-- create post-->
+                <form action="/createPost" method="POST" enctype="multipart/form-data" id="createPost" >
+                    <div class="card gedf-card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab"
+                                        aria-controls="posts" aria-selected="true">Make
+                                        a publication</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="images-tab" data-toggle="tab" role="tab"
+                                        aria-controls="images" aria-selected="false" href="#images">Images</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="posts" role="tabpanel"
+                                    aria-labelledby="posts-tab">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="message">post</label>
+                                        <textarea class="form-control" id="message" rows="3"
+                                            placeholder="What are you thinking?" name="description"></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="customFile"
+                                                name="file_image">
+                                            <label class="custom-file-label" for="customFile">Upload image</label>
+                                        </div>
+                                    </div>
+                                    <div class="py-4"></div>
+                                </div>
+                            </div>
+                            <div class="btn-toolbar justify-content-between">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-primary">share</button>
+                                </div>
+                                <div class="btn-group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-link dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-globe"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item" href="#"><i class="fa fa-globe"></i> Public</a>
+                                        <a class="dropdown-item" href="#"><i class="fa fa-users"></i> Friends</a>
+                                        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Just me</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- end create post -->
+                <!--all posts -->
+                <% if(posts.length > 0) {
+                    posts.forEach(post => {  %>
+                <form id="<%=post._id%>">
+                    <div class="card gedf-card " id="card_full">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="mr-2">
+                                        <img class="rounded-circle" width="45" height="45"
+                                            src="/public/image/avatar/<%=post.avatar%>" alt="">
+                                    </div>
+                                    <div class="ml-2">
+                                        <div class="h5 m-0"><a href="/profile/<%=post.username%>"><%=post.username%></a>
+                                        </div>
+                                        <div class="h7 text-muted"><%=post.fullname%></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-link dropdown-toggle" type="button" id="gedf-drop1"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-h"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="gedf-drop1">
+                                            <a class="dropdown-item" href="#">Delete</a>
+                                            <a class="dropdown-item" href="#">Save</a>
+                                            <a class="dropdown-item" href="#">Report</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o">
+                                    <%  let day=new Date().getDate(); let hour=new Date().getHours(); let minutes=new Date().getMinutes(); %>
+                                    <% if(day-post.date.day <1){ %>
+                                    <% if(hour-post.date.time_hours<=1){ %>
+
+                                    <% if(post.date.time_minutes>minutes){ %>
+                                    about <%=minutes-post.date.time_minutes+60%> min ago
+                                    <%}else{%>
+                                    <% if(minutes-post.date.time_minutes<1){ %>
+                                    just now
+                                    <% }else{ %>
+                                    <% if(minutes>post.date.time_minutes){ %>
+                                    about <%=minutes-post.date.time_minutes%> min ago
+                                    <% } %>
+                                    <% } %>
+                                    <% } %>
+                                    <%}else{%>
+                                    about <%=hour-post.date.time_hours%> h ago
+                                    <%}%>
+                                              <% }else{ %>
+                                    about <%=day-post.date.day%> d ago
+                                    <%} %>
+                                </i></div>
+                            <a class="card-link" href="/post/<%= post._id %>">
+                                <p class="card-text" style="color: black;font-size: 32px;"><%=post.description%></p>
+                                <% if(post.image!="") { %>
+                                <img src="/public/image/<%= post.image %>"
+                                    style="height: 100%;width: 100%; top: 0; left: 0">
+                                <% } %>
+                            </a>
+                            <br>
+                            <div class="timeline-likes" style="margin-top: 20px; ">
+                                <div class="stats-right">
+                                    <span class="stats-text">2 Shares</span>
+                                    <% if(post.comment.length>0){ %>
+                                        <span class="stats-text" id="commentcount"><%=post.comment.length%> Comments</span>
+                                        <% }else{ %>
+                                        <span class="stats-text" id="commentcount"></span>
+                                        <%} %>
+                                </div>
+                                <div class="stats">
+                                    <span class="fa-stack fa-fw stats-icon">
+                                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                        <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                    <span class="stats-text" id="likeCount-<%=post._id%>"><%=1+post.like.length%></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-sm-3" >
+                                    <label for="like-<%=post._id%>">
+                                        <% if(post.like.includes(userSession.name)==true){ %>
+                                            <i class="fa fa-gittip" id="Like-<%=post._id%>" style="color: blue; cursor:pointer;"> Like</i>
+                                        <% }else{ %>
+                                        <i class="fa fa-gittip" id="Like-<%=post._id%>" style="color: #777474; cursor:pointer;"> Like</i>
+                                        <% } %>
+                                    </label>
+                                    <button id="like-<%=post._id%>" class="like_count" style="display: none;" type="button" ></button>
+                                </div>
+                                    <script>
+                                       var count=0;
+                                       
+                                        document.getElementById("like-<%=post._id%>").addEventListener("click",()=>{
+                                             if(document.getElementById("Like-<%=post._id%>").style.color!="blue"){
+                                                document.getElementById("likeCount-<%=post._id%>").innerHTML = `<%=2+post.like.length%>`;
+                                             }
+                                             document.getElementById("Like-<%=post._id%>").style.color="blue";
+                                             socket.emit("like_post",{
+                                                 id:"<%=post._id%>",
+                                                 userSession:"<%=userSession.name%>"
+                                                 
+                                             });
+                                         
+                                        })
+                                         socket.on("server_send_likecount_<%=post._id%>",(data)=>{
+                                            document.getElementById("likeCount-<%=post._id%>").innerHTML = `${data.likecount}`;
+                                         })
+                                    </script>
+                                <div class="col-sm-6" style="text-align: center;">
+                                    <a href="/post/<%=post._id%>" class="card-link" style="color: #777474;"><i class="fa fa-comment"></i> Comment</a>
+                                </div>
+                                <div class="col-sm-3" style="text-align: right;">
+                                    <a href="#" class="card-link" style="color: #777474;"><i class="fa fa-mail-forward"></i> Share</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            
+            <% });
+          } %>
+         </div>
+        <!--Right screen-->
+         <div class="col-md-3">
+            <!-- Card 1-->
+            <div class="card gedf-card" style="height: 350px;">
+                    <div class="card-header" style="text-align: center;">
+                        <p style="font-size: 2.5vw;">Được tài trợ</p>    
+                    </div>
+                    <div class="card-body">
+                    </div>
+                    <div class="timeline-likes" style="margin-bottom: 10px; padding: 5px;">
+                    </div>
+            </div>
+            <!--End Card 1-->
+            <div class="card" style="min-height: 500px;">
+                <div class="header" style="border-bottom: solid #e5e5e5 1px;">
+                    <p style="color: #7f7f7f;text-align: center; margin-top: 10px;">Người liên hệ</p>
+                </div>
+                <% if(userSession.friends.length > 0){
+                    userSession.friends.forEach(friend=>{ %>
+                        <a href="/send_message/<%=userSession.name%>/<%=friend.username%>" class="friend" style="text-decoration: none;">
+                           <div class="friend_list" id="<%=friend.username%>" style="padding: 10px;">
+                            <% if(online.includes(friend.username)==true){ %>
+                            <span style="padding-right: 5px; display: inline-block; font-size: 1.5vw;">
+                                <img class="rounded-circle" src="/public/image/avatar/<%=friend.avatar%>" alt="" style="max-width: 9%;">  <%=friend.username%>  <i class="fas fa-circle" style="color:#0ad10a; font-size: 10px; "></i>
+                            </span>
+                            <% }else{ %>
+                            <span style="padding-right: 5px; display: inline-block; font-size: 1.5vw;">
+                                <img class="rounded-circle" src="/public/image/avatar/<%=friend.avatar%>" alt="" style="max-width: 9%;">  <%=friend.username%>  <i class="fas fa-circle" style="color:#7f7f7f; font-size: 10px; "></i>
+                            </span>
+                            <% } %>
+                           </div>
+                        </a>    
+                    <% })
+                } %>
+            </div>
+           </div>
+         </div>
+    </div>
+</body>
+</html>
